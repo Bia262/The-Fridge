@@ -6,7 +6,6 @@
 				<span>My Fridge</span>
 				<span class="text-pink-400">🧊</span>
 			</h2>
-			
 			<!-- Search Bar -->
 			<div class="relative mb-4">
 				<input 
