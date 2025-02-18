@@ -9,8 +9,8 @@
 	<nav class="bg-[#fee9f0] p-4 shadow-md">
 		<div class="container mx-auto flex items-center justify-between">
 			<div class="flex items-center space-x-2">
-				<a href="/">
-					
+				<a href="/" class="flex flex-row items-center space-x-2">
+					<img src="/assets/fridge.png" alt="The Fridge" class="w-10 h-10" />
 					<span class="text-2xl font-bold text-gray-800">The Fridge</span>
 				</a>
 			</div>
