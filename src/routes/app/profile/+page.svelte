@@ -1,3 +1,11 @@
+<script lang="ts">
+  // Import the data from the server
+  export let data;
+  
+  // Extract user from data
+  const { user, savedRecipesCount, recipesUploadedCount, itemsInFridgeCount } = data;
+</script>
+
 <div class="min-h-screen bg-pink-50/30 p-8">
   <div class="container mx-auto max-w-2xl">
     <div class="bg-white rounded-2xl shadow-xl p-8 border-2 border-pink-100">
@@ -9,23 +17,22 @@
           </svg>
         </div>
         <div>
-          <h1 class="text-2xl font-bold text-gray-800">John Doe ✨</h1>
-          <p class="text-pink-400">Member since 2024</p>
+          <h1 class="text-2xl font-bold text-gray-800">{user?.name || 'User'} ✨</h1>
         </div>
       </div>
 
       <!-- Stats -->
       <div class="grid grid-cols-3 gap-4 mb-8">
         <div class="bg-white border-2 border-pink-100 p-4 rounded-xl text-center hover:border-pink-200 transition-all duration-200">
-          <div class="text-2xl font-bold text-gray-800">12</div>
+          <div class="text-2xl font-bold text-gray-800">{recipesUploadedCount}</div>
           <div class="text-sm text-pink-400">Recipes</div>
         </div>
         <div class="bg-white border-2 border-pink-100 p-4 rounded-xl text-center hover:border-pink-200 transition-all duration-200">
-          <div class="text-2xl font-bold text-gray-800">34</div>
+          <div class="text-2xl font-bold text-gray-800">{savedRecipesCount}</div>
           <div class="text-sm text-pink-400">Saved</div>
         </div>
         <div class="bg-white border-2 border-pink-100 p-4 rounded-xl text-center hover:border-pink-200 transition-all duration-200">
-          <div class="text-2xl font-bold text-gray-800">156</div>
+          <div class="text-2xl font-bold text-gray-800">{itemsInFridgeCount}</div>
           <div class="text-sm text-pink-400">Items</div>
         </div>
       </div>
