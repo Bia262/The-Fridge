@@ -47,7 +47,7 @@
         The Fridge is a smart kitchen management app that helps you track ingredients, reduce food waste, and discover recipes based on what you already have.
       </p>
       <div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-        <Button href="/auth" size="xl" class="bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700">
+        <Button href="/app" size="xl" class="bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700">
           Get Started
           <ArrowRightOutline class="w-5 h-5 ml-2" />
         </Button>
