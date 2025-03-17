@@ -16,60 +16,70 @@
 	
 	// Sample recipes data
 	const recipes: Recipe[] = [
-		{
+				{
 			id: '1',
-			name: 'Creamy Garlic Pasta',
-			description: 'A rich and creamy pasta dish with a garlic infused sauce. Perfect for a quick weeknight dinner!',
-			instructions: '1. Cook pasta according to package directions.\n2. In a large skillet, melt butter over medium heat. Add minced garlic and cook for 1 minute.\n3. Add heavy cream and bring to a simmer.\n4. Stir in parmesan cheese until melted and sauce is smooth.\n5. Add cooked pasta to the sauce and toss to coat.\n6. Season with salt and pepper. Garnish with parsley.',
-			servings: 4,
+			name: 'Pancake Breakfast Tacos',
+			description: 'Fluffy pancakes filled with crispy bacon, scrambled eggs, and cheddar cheese.',
+			instructions: '1. Heat the oven to 200C/180C fan/gas 6 and arrange the bacon in a single layer on a baking tray.\n2. Bake for 12-14 mins until crisp. Meanwhile, combine the flour, baking powder, and sugar in a bowl.\n3. Whisk the butter, vanilla, milk, and egg together in a jug.\n4. Make a well in the centre of the dry ingredients and pour in the wet mixture, whisking to combine.\n5. Heat a little of the oil in a non-stick pan over medium heat.\n6. Spoon in 2 tbsp batter and spread out into a 12cm circle. Cook for 2-3 mins until the edge is set and golden.\n7. Flip and cook for 1-2 mins more until set. Repeat to make four pancakes, keeping finished pancakes warm in a low oven.\n8. Whisk eggs with a pinch of salt, then cook in butter over medium heat until set, light, and fluffy.\n9. Fill pancakes with bacon, scrambled eggs, and cheddar cheese.',
+			servings: 2,
 			prepTime: 10,
-			cookTime: 15,
-			images: [
-				'https://source.unsplash.com/random/900x700/?pasta',
-				'https://source.unsplash.com/random/900x700/?garlic'
-			],
+			cookTime: 20,
+			images: ['/images/tacos1.jpg', '/images/tacos2.jpg' ],
 			createdBy: 'admin'
 		},
 		{
 			id: '2',
-			name: 'Vegetable Stir-Fry',
-			description: 'A colorful and nutritious stir-fry loaded with fresh vegetables and a savory sauce.',
-			instructions: '1. Prepare all vegetables by cutting them into bite-sized pieces.\n2. Mix soy sauce, cornstarch, and sesame oil to make the sauce.\n3. Heat vegetable oil in a wok or large skillet over high heat.\n4. Add harder vegetables first (carrots, broccoli) and cook for 2 minutes.\n5. Add remaining vegetables and cook until crisp-tender.\n6. Pour sauce over vegetables and cook until thickened.\n7. Serve over rice or noodles.',
-			servings: 3,
-			prepTime: 15,
-			cookTime: 10,
-			images: [
-				'https://source.unsplash.com/random/900x700/?stirfry',
-				'https://source.unsplash.com/random/900x700/?vegetables'
-			],
+			name: 'Easy Egg Muffins',
+			description: 'Savory egg muffins with broccoli, red pepper, cheese, and smoked paprika.',
+			instructions: '1. Heat the oven to 200C/180C fan/gas 4. Brush half the oil in an 8-hole muffin tin.\n2. Heat the remaining oil in a frying pan and add the broccoli, pepper, and spring onions. Fry for 5 mins.\n3. Whisk the eggs with milk, smoked paprika, and half the cheese in a bowl.\n4. Add the cooked veg. Pour the egg mixture into the muffin holes and top with the remaining cheese and chives.\n5. Bake for 15-17 mins or until golden brown and cooked through.',
+			servings: 8,
+			prepTime: 10,
+			cookTime: 30,
+			images: ['/images/eggmuffin1.jpg', '/images/eggmuffin2.jpg'],
 			createdBy: 'admin'
 		},
 		{
 			id: '3',
-			name: 'Avocado Toast',
-			description: 'Simple yet delicious avocado toast with optional toppings. A perfect healthy breakfast or snack!',
-			instructions: '1. Toast bread until golden and firm.\n2. Remove pits from avocados and scoop the flesh into a bowl.\n3. Add lemon juice, salt, and pepper to taste. Mash with a fork to desired consistency.\n4. Spread avocado mixture on toast.\n5. Add desired toppings like sliced tomatoes, red pepper flakes, or a poached egg.',
-			servings: 2,
-			prepTime: 5,
-			cookTime: 5,
-			images: [
-				'https://source.unsplash.com/random/900x700/?avocadotoast',
-				'https://source.unsplash.com/random/900x700/?avocado'
-			],
+			name: 'Smokey Beans and Baked Eggs',
+			description: 'A hearty dish of smoky beans with baked eggs, perfect for breakfast or brunch.',
+			instructions: '1. Heat the oil in a wide, shallow pan and cook the onion for 8-10 mins until softened.\n2. Add the pepper and cook for another 5 mins, stirring regularly, until softened.\n3. Stir in the garlic, paprika, and ketchup, then add the tomatoes. Cover and simmer for 10 mins.\n4. Remove the lid, cook for a few more minutes to thicken, then add the beans.\n5. Use a spoon to make 4-6 spaces in the mixture for the eggs.\n6. Crack the eggs into each hole, cover the pan, and reduce the heat to low.\n7. Cook for 3-5 mins until the egg whites are set but yolks are still runny.\n8. Scatter over the coriander to serve.',
+			servings: 3,
+			prepTime: 10,
+			cookTime: 35,
+			images: ['/images/smokey1.jpg', '/images/smokey2.jpg'],
 			createdBy: 'admin'
 		},
 		{
 			id: '4',
-			name: 'Berry Smoothie Bowl',
-			description: 'A refreshing and nutritious smoothie bowl packed with berries and topped with granola and fresh fruit.',
-			instructions: '1. Add frozen berries, banana, and milk to a blender.\n2. Blend until smooth, adding more liquid if needed.\n3. Pour into a bowl.\n4. Top with granola, fresh berries, sliced banana, and a drizzle of honey.',
-			servings: 1,
-			prepTime: 5,
-			cookTime: 0,
-			images: [
-				'https://source.unsplash.com/random/900x700/?smoothiebowl',
-				'https://source.unsplash.com/random/900x700/?berries'
-			],
+			name: 'Creamy Chicken Pasta',
+			description: 'A rich and creamy pasta dish with shredded chicken, soft cheese, and spinach.',
+			instructions: '1. Cook the pasta following pack instructions. Reserve 100ml of the water and drain.\n2. Heat oil in a frying pan on medium heat and fry the garlic and spinach for 3 mins until wilted.\n3. Add the soft cheese and heat until melted. Stir in most of the parmesan, then add the chicken, peas, and pasta water.\n4. Bring to the boil and bubble for 2-3 mins until heated through.\n5. Add the pasta and stir until combined.\n6. Add more pasta water to loosen the sauce if needed.\n7. Remove from heat, sprinkle over the remaining parmesan and herbs to serve.',
+			servings: 4,
+			prepTime: 10,
+			cookTime: 15,
+			images: ['/images/c1.jpg', '/images/c2.jpg'],
+			createdBy: 'admin'
+		},
+		{
+			id: '5',
+			name: 'Spiced Carrot & Lentil Soup',
+			description: 'A warming and nutritious soup with carrots, lentils, and aromatic spices.',
+			instructions: '1. Heat a large saucepan and dry-fry the cumin seeds and chilli flakes for 1 min until aromatic.\n2. Scoop out half and set aside.\n3. Add olive oil, grated carrots, lentils, stock, and milk to the pan and bring to the boil.\n4. Simmer for 15 mins until lentils are soft.\n5. Blend the soup until smooth (or leave chunky if preferred).\n6. Season to taste and finish with yogurt and reserved toasted spices.\n7. Serve with warmed naan bread.',
+			servings: 4,
+			prepTime: 10,
+			cookTime: 15,
+			images: ['/images/l1.jpg', '/images/l2.jpg'],
+			createdBy: 'admin'
+		},
+		{
+			id: '6',
+			name: 'Easiest Ever Seafood Rice',
+			description: 'A simple and delicious seafood rice dish with chorizo and turmeric.',
+			instructions: '1. Heat oil in a deep frying pan, then soften the leek for 5 mins.\n2. Add the chorizo and fry until it releases its oils.\n3. Stir in the turmeric and rice until coated, then pour in the stock.\n4. Bring to the boil, then simmer for 15 mins, stirring occasionally.\n5. Add the peas and cook for 5 mins.\n6. Stir in the seafood and cook for 1-2 mins until rice is cooked.\n7. Check for seasoning and serve immediately with lemon wedges.',
+			servings: 4,
+			prepTime: 10,
+			cookTime: 20,
+			images: ['/images/s1.jpg', '/images/s2.jpg'],
 			createdBy: 'admin'
 		}
 	];
@@ -84,7 +94,7 @@
 		showRecipePopup = true;
 	}
 
-	let itemList = ["banán"];
+	let itemList = ["Eggs"];
 
 	function deleteItem(itemName:string) {
 		itemList = itemList.filter(item => item !== itemName);
@@ -97,7 +107,7 @@
 		}
 		itemName.value="";
 	}
-</script>
+	</script>
 
 <div class="container mx-auto mt-8 px-4">
 	<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
