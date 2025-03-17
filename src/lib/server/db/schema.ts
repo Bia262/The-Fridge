@@ -23,6 +23,8 @@ export const recipeIngredient = pgTable("recipe_ingredient", {
     ingredientId: text('ingredient_id').notNull().references(() => ingredient.id),
 });
 
+const difficulty = pgEnum('difficulty', ['easy', 'medium', 'hard']);
+
 export const recipe = pgTable("recipe", {
     id: text('id').primaryKey().default(sql`gen_random_uuid()`),
     name: text('name').notNull(),
@@ -32,6 +34,7 @@ export const recipe = pgTable("recipe", {
     prepTime: integer('prep_time').notNull(),   
     cookTime: integer('cook_time').notNull(),
     images: text('images').array(),
+    difficulty: difficulty('difficulty').default('easy'),
     createdBy: text('created_by').notNull().references(() => user.id),
 });
 
