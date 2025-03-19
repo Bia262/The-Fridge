@@ -18,12 +18,14 @@
 					href="/app/recipes" 
 					class="flex items-center p-2 rounded-lg {$page.url.pathname === '/app/recipes' ? 'bg-white' : ''}"
 				>
+					<p>Recipes</p>
 					<img src="/assets/cookbutton.png" alt="Recipes" class="w-6 h-6 mix-blend-multiply" />
 				</a>
 				<a 
 					href="/app/profile" 
 					class="flex items-center p-2 rounded-lg {$page.url.pathname === '/app/profile' ? 'bg-white' : ''}"
 				>
+					<p>Profile</p>
 					<img src="/assets/profilebutton.png" alt="Profile" class="w-6 h-6" />
 				</a>
 			</div>
