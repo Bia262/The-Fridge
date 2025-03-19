@@ -16,7 +16,7 @@
 	
 	// Sample recipes data
 	const recipes: Recipe[] = [
-				{
+		{
 			id: '1',
 			name: 'Pancake Breakfast Tacos',
 			description: 'Fluffy pancakes filled with crispy bacon, scrambled eggs, and cheddar cheese.',
@@ -95,19 +95,31 @@
 	}
 
 	let itemList = ["Eggs"];
+	let suggestions: string[] = [];
+	let allowedItems = ["Eggs", "Milk", "Bread", "Butter", "Cheese"];
 
-	function deleteItem(itemName:string) {
+	function deleteItem(itemName: string) {
 		itemList = itemList.filter(item => item !== itemName);
-    }
-
-	function addItem(){
-		let itemName:any = document.getElementById("addItemName")
-		if(itemName){
-			itemList = [...itemList, itemName.value]
-		}
-		itemName.value="";
 	}
-	</script>
+
+	function updateSuggestions() {
+		const itemName = document.getElementById("addItemName") as HTMLInputElement | null;
+		if (itemName) {
+			const inputValue = itemName.value.toLowerCase();
+        suggestions = allowedItems.filter(item => item.toLowerCase().includes(inputValue)).slice(0, 5);
+
+		}
+	}
+
+	function addItem() {
+		const itemNameElement = document.getElementById("addItemName") as HTMLInputElement | null;
+		if (itemNameElement && allowedItems.includes(itemNameElement.value)) {
+			itemList = [...itemList, itemNameElement.value];
+			suggestions = [];
+			itemNameElement.value = "";
+		}
+	}
+</script>
 
 <div class="container mx-auto mt-8 px-4">
 	<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -133,7 +145,6 @@
 			<div class="h-[400px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-pink-200 scrollbar-track-pink-50">
 				<div class="space-y-3">
 					{#each itemList as item}
-				
 						<div class="bg-white p-4 rounded-xl border-2 border-pink-100 hover:border-pink-200 hover:shadow-md transition-all duration-200">
 							<div class="flex items-center justify-between">
 								<div class="flex items-center space-x-3">
@@ -153,7 +164,16 @@
 				</div>
 			</div>
 
-			<input type="text" id="addItemName" class="w-full px-4 py-3 border-2 border-pink-100 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-200 placeholder-gray-400">
+			<input type="text" id="addItemName" class="w-full px-4 py-3 border-2 border-pink-100 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-200 placeholder-gray-400" on:input={updateSuggestions}>
+			{#if suggestions.length > 0}
+				<ul class="absolute bg-white border border-gray-300 rounded-md -mt-1 w-8/30 z-10">
+					{#each suggestions as suggestion}
+						<li class="p-2 hover:bg-gray-200 cursor-pointer" on:click={() => {document.getElementById("addItemName").value = suggestion; suggestions = []; }}>
+							{suggestion}
+						</li>
+					{/each}
+				</ul>
+			{/if}
 			<button class="mt-6 w-full bg-gradient-to-r from-pink-100 to-pink-200 text-gray-800 py-3 px-6 rounded-full hover:shadow-lg transition-all duration-200 flex items-center justify-center space-x-2 font-medium" on:click={() => {addItem()}}>
 				<svg class="w-5 h-5 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
@@ -194,7 +214,6 @@
 							<div class="text-pink-400">
 								<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-								</svg>
 							</div>
 						</div>
 					</div>
