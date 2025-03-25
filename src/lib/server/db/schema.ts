@@ -17,13 +17,8 @@ export const session = pgTable("session", {
     expiresAt: timestamp('expires_at', { withTimezone: true, mode: 'date' }).notNull()
 });
 
-export const recipeIngredient = pgTable("recipe_ingredient", {
-    id: text('id').primaryKey().default(sql`gen_random_uuid()`),
-    recipeId: text('recipe_id').notNull().references(() => recipe.id),
-    ingredientId: text('ingredient_id').notNull().references(() => ingredient.id),
-});
-
-const difficulty = pgEnum('difficulty', ['easy', 'medium', 'hard']);
+// Define difficulty enum type
+export const difficultyEnum = pgEnum('difficulty', ['easy', 'medium', 'hard']);
 
 export const recipe = pgTable("recipe", {
     id: text('id').primaryKey().default(sql`gen_random_uuid()`),
@@ -34,7 +29,7 @@ export const recipe = pgTable("recipe", {
     prepTime: integer('prep_time').notNull(),   
     cookTime: integer('cook_time').notNull(),
     images: text('images').array(),
-    difficulty: difficulty('difficulty').default('easy'),
+    difficulty: difficultyEnum('difficulty').default('easy'),
     createdBy: text('created_by').notNull().references(() => user.id),
 });
 
@@ -42,6 +37,14 @@ export const ingredient = pgTable("ingredient", {
     id: text('id').primaryKey().default(sql`gen_random_uuid()`),
     name: text('name').notNull(),
     description: text('description'),
+});
+
+export const recipeIngredient = pgTable("recipe_ingredient", {
+    id: text('id').primaryKey().default(sql`gen_random_uuid()`),
+    recipeId: text('recipe_id').notNull().references(() => recipe.id),
+    ingredientId: text('ingredient_id').notNull().references(() => ingredient.id),
+    amount: text('amount'),
+    unit: text('unit')
 });
 
 export const savedRecipe = pgTable("saved_recipe", {

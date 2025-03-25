@@ -7,20 +7,27 @@
   export let recipe: {
     id: string;
     name: string;
-    description: string;
-    instructions: string;
+    description: string | null;
+    instructions: string | null;
     servings: number;
     prepTime: number;
     cookTime: number;
-    images: string[];
+    images: string[] | null;
     createdBy: string;
+    difficulty?: 'easy' | 'medium' | 'hard';
+    ingredients?: Array<{
+      id: string;
+      name: string;
+      amount?: string;
+      unit?: string;
+    }>;
   };
   
   // Prepare images for carousel
-  $: carouselImages = recipe.images.map(url => ({
+  $: carouselImages = recipe.images?.map(url => ({
     src: url,
     alt: recipe.name
-  }));
+  })) || [];
 
   function formatTime(minutes: number) {
     if (!minutes) return 'N/A';
@@ -36,7 +43,7 @@
   }
   
   // Parse instructions as steps (assuming they're separated by newlines or numbers)
-  function parseInstructions(instructions: string) {
+  function parseInstructions(instructions: string | null) {
     if (!instructions) return [];
     
     // Split by newlines first
@@ -97,48 +104,83 @@
       {/if}
       
       <!-- Recipe Info -->
-      <div class="flex gap-8 mb-6 justify-center text-center border-y border-pink-200 py-4 bg-pink-100/30 rounded-lg">
-        <div class="flex flex-col items-center">
+      <div class="flex gap-4 mb-6 justify-center text-center border-y border-pink-200 py-4 bg-pink-100/30 rounded-lg flex-wrap">
+        <div class="flex flex-col items-center px-2">
           <span class="text-sm text-pink-600 font-medium">Prep Time</span>
           <span class="font-medium text-pink-800">{formatTime(recipe.prepTime)}</span>
         </div>
         
-        <div class="flex flex-col items-center">
+        <div class="flex flex-col items-center px-2">
           <span class="text-sm text-pink-600 font-medium">Cook Time</span>
           <span class="font-medium text-pink-800">{formatTime(recipe.cookTime)}</span>
         </div>
         
-        <div class="flex flex-col items-center">
+        <div class="flex flex-col items-center px-2">
           <span class="text-sm text-pink-600 font-medium">Total Time</span>
           <span class="font-medium text-pink-800">{formatTime(recipe.prepTime + recipe.cookTime)}</span>
         </div>
         
-        <div class="flex flex-col items-center">
+        <div class="flex flex-col items-center px-2">
           <span class="text-sm text-pink-600 font-medium">Servings</span>
           <span class="font-medium text-pink-800">{recipe.servings}</span>
         </div>
+        
+        {#if recipe.difficulty}
+          <div class="flex flex-col items-center px-2">
+            <span class="text-sm text-pink-600 font-medium">Difficulty</span>
+            <span class="font-medium text-pink-800 capitalize">{recipe.difficulty}</span>
+          </div>
+        {/if}
       </div>
       
-      <!-- Recipe Instructions -->
-      {#if instructionSteps.length > 0}
-        <div class="mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <!-- Ingredients -->
+        <div>
           <h2 class="text-xl font-bold text-pink-700 mb-3 flex items-center">
-            <span class="bg-pink-200 text-pink-700 p-1 rounded-full mr-2">🍳</span> Instructions
+            <span class="bg-pink-200 text-pink-700 p-1 rounded-full mr-2">🥕</span> Ingredients
           </h2>
-          <ol class="space-y-3">
-            {#each instructionSteps as step, i}
-              <li class="bg-pink-50 p-4 rounded-lg border-2 border-pink-200 hover:border-pink-300 transition-all duration-200 shadow-sm">
-                <div class="flex items-start gap-3">
-                  <div class="bg-gradient-to-r from-pink-400 to-purple-500 text-white rounded-full w-7 h-7 flex items-center justify-center flex-shrink-0 mt-0.5 shadow-md">
-                    {i + 1}
-                  </div>
-                  <p class="text-pink-900">{step}</p>
-                </div>
-              </li>
-            {/each}
-          </ol>
+          
+          {#if recipe.ingredients && recipe.ingredients.length > 0}
+            <ul class="space-y-2">
+              {#each recipe.ingredients as ingredient}
+                <li class="flex items-center bg-pink-50 p-3 rounded-lg border border-pink-100">
+                  <div class="w-2 h-2 bg-pink-400 rounded-full mr-3"></div>
+                  <span>
+                    {#if ingredient.amount && ingredient.unit}
+                      <span class="font-medium">{ingredient.amount} {ingredient.unit}</span> {ingredient.name}
+                    {:else}
+                      {ingredient.name}
+                    {/if}
+                  </span>
+                </li>
+              {/each}
+            </ul>
+          {:else}
+            <p class="text-gray-500 italic">No ingredients listed</p>
+          {/if}
         </div>
-      {/if}
+      
+        <!-- Recipe Instructions -->
+        {#if instructionSteps.length > 0}
+          <div>
+            <h2 class="text-xl font-bold text-pink-700 mb-3 flex items-center">
+              <span class="bg-pink-200 text-pink-700 p-1 rounded-full mr-2">🍳</span> Instructions
+            </h2>
+            <ol class="space-y-3">
+              {#each instructionSteps as step, i}
+                <li class="bg-pink-50 p-3 rounded-lg border border-pink-100">
+                  <div class="flex items-start gap-3">
+                    <div class="bg-gradient-to-r from-pink-400 to-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 text-xs shadow-sm">
+                      {i + 1}
+                    </div>
+                    <p class="text-pink-900 text-sm">{step}</p>
+                  </div>
+                </li>
+              {/each}
+            </ol>
+          </div>
+        {/if}
+      </div>
       
       <!-- Actions Buttons -->
       <div class="flex justify-between mt-8">
