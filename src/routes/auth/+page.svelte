@@ -85,7 +85,7 @@
 			
 			<div>
 				<Label for="password" class="mb-2 text-gray-700">Password</Label>
-				<Input id="password" name="password" type="password" 
+				<Input id="password" name="password" type="password" placeholder="Your password" 
 					class="w-full px-4 py-3 border-2 border-pink-100 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-200"
 					required />
 			</div>
