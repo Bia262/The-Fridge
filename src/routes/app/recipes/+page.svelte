@@ -41,21 +41,21 @@
   
   // Form data for new recipe
   let newRecipe = {
-    name: '',
-    description: '',
-    instructions: '',
+    name: 'Pancake Breakfast Toast',
+    description: 'Fluffy pancakes filled with crispy bacon, scrambled eggs, and cheddar cheese.',
+    instructions: '1. Heat the oven to 200C/180C fan/gas 6 and arrange the bacon in a single layer on a baking tray.\n2. Bake for 12-14 mins until crisp. Meanwhile, combine the flour, baking powder, and sugar in a bowl.\n3. Whisk the butter, vanilla, milk, and egg together in a jug.\n4. Make a well in the centre of the dry ingredients and pour in the wet mixture, whisking to combine.\n5. Heat a little of the oil in a non-stick pan over medium heat.\n6. Spoon in 2 tbsp batter and spread out into a 12cm circle. Cook for 2-3 mins until the edge is set and golden.\n7. Flip and cook for 1-2 mins more until set. Repeat to make four pancakes, keeping finished pancakes warm in a low oven.\n8. Whisk eggs with a pinch of salt, then cook in butter over medium heat until set, light, and fluffy.\n9. Fill pancakes with bacon, scrambled eggs, and cheddar cheese.',
     servings: 2,
-    prepTime: 15,
-    cookTime: 30,
-    images: [] as string[],
+    prepTime: 10,
+    cookTime: 20,
+    images: [/images/tacos1.jpg] as string[],
     difficulty: 'medium' as 'easy' | 'medium' | 'hard',
     ingredients: [] as {id: string, name: string, amount: string, unit: string}[]
   };
   
   // For ingredient management
-  let ingredientInput = '';
-  let ingredientAmount = '';
-  let ingredientUnit = '';
+  let ingredientInput = 'Bread \nEggs';
+  let ingredientAmount = '2';
+  let ingredientUnit = '2';
   let availableIngredients: Ingredient[] = data.ingredients;
   let filteredIngredients: Ingredient[] = [];
 
