@@ -26,7 +26,7 @@ export const actions: Actions = {
 		const password = formData.get('password');
 
 		if (!validateEmail(email)) {
-			return fail(400, { message: 'Invalid email format' });
+			return fail(400, { message: 'Invalid email' });
 		}
 		if (!validatePassword(password)) {
 			return fail(400, { message: 'Invalid password (min 6, max 255 characters)' });
