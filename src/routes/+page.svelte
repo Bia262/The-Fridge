@@ -2,38 +2,7 @@
   import { Button, Card, Timeline, TimelineItem, Avatar, Footer, FooterCopyright, FooterIcon, FooterLink, FooterLinkGroup } from 'flowbite-svelte';
   import { ArrowRightOutline, CheckOutline } from 'flowbite-svelte-icons';
 
-  const features = [
-    {
-      icon: "🥗",
-      title: "Smart Ingredient Tracking",
-      description: "Keep tabs on everything in your kitchen with our intelligent tracking system. Never forget what's in your pantry again."
-    },
-    {
-      icon: "🍽️",
-      title: "Recipe Suggestions",
-      description: "Get personalized recipe recommendations based on the ingredients you already have in your kitchen."
-    },
-    {
-      icon: "📊",
-      title: "Expiration Management",
-      description: "Receive timely notifications about ingredients nearing expiration to reduce food waste."
-    },
-    {
-      icon: "🛒",
-      title: "Smart Shopping Lists",
-      description: "Generate shopping lists based on what you're running low on and recipes you want to make."
-    },
-    {
-      icon: "💰",
-      title: "Budget Tracking",
-      description: "Monitor your grocery spending and identify ways to save money on food purchases."
-    },
-    {
-      icon: "🌱",
-      title: "Sustainability Impact",
-      description: "Track your environmental impact as you reduce food waste and make more conscious choices."
-    }
-  ];
+
 </script>
 
 <!-- Hero Section -->
@@ -51,9 +20,7 @@
           Get Started
           <ArrowRightOutline class="w-5 h-5 ml-2" />
         </Button>
-        <Button href="#features" color="light" size="xl" class="border-2 border-pink-200 text-pink-700 hover:bg-pink-50">
-          Learn More
-        </Button>
+       
       </div>
     </div>
     <div class="max-w-md flex justify-center">
@@ -75,7 +42,7 @@
                 </div>
                 <div>
                   <p class="font-medium">Item {i + 1}</p>
-                  <p class="text-xs text-gray-500">Expires in {Math.floor(Math.random() * 5) + 1} days</p>
+                 
                 </div>
               </div>
             {/each}
@@ -94,37 +61,7 @@
   </div>
 </section>
 
-<!-- Features Section -->
-<section id="features" class="bg-blue-50 py-16 border-t border-b border-blue-100">
-  <div class="max-w-screen-xl px-4 mx-auto">
-    <div class="max-w-2xl mx-auto text-center mb-16">
-      <h2 class="text-3xl font-extrabold leading-tight tracking-tight text-gray-900 sm:text-4xl">
-        Why Choose <span class="text-pink-600">The Fridge</span>?
-      </h2>
-      <p class="mt-4 text-base text-gray-700 sm:text-xl">
-        A smarter way to manage your kitchen, reduce waste, and save money
-      </p>
-    </div>
-    
-    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-      {#each features as feature}
-        <Card class="border-2 border-pink-200 bg-white hover:border-pink-300 hover:shadow-lg transition-all duration-300">
-          <div class="flex flex-col items-center text-center">
-            <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mb-4">
-              <span class="text-3xl">{feature.icon}</span>
-            </div>
-            <h3 class="mb-2 text-xl font-bold text-white">
-              {feature.title}
-            </h3>
-            <p class="text-white">
-              {feature.description}
-            </p>
-          </div>
-        </Card>
-      {/each}
-    </div>
-  </div>
-</section>
+
 
 <!-- How It Works Section -->
 <section class="py-16 bg-pink-50">
@@ -185,31 +122,6 @@
   </div>
 </section>
 
-<!-- Testimonials -->
-<section class="bg-gradient-to-br from-yellow-50 to-orange-50 py-16 border-t border-b border-yellow-100">
-  <div class="max-w-screen-xl px-4 mx-auto">
-    <div class="max-w-2xl mx-auto text-center mb-16">
-      <h2 class="text-3xl font-extrabold leading-tight tracking-tight text-gray-900 sm:text-4xl">
-        What Our Users <span class="text-pink-600">Say</span>
-      </h2>
-    </div>
-    
-    <div class="grid gap-8 lg:grid-cols-3">
-      {#each testimonials as testimonial}
-        <Card class="border-2 border-pink-200 bg-white shadow-md hover:shadow-lg transition-all duration-300">
-          <div class="flex flex-col items-center text-center p-4">
-            <Avatar src={testimonial.avatar} alt="user avatar" rounded class="mb-4 border-2 border-pink-100" />
-            <p class="text-lg font-medium text-white mb-4">{testimonial.text}</p>
-            <div>
-              <h5 class="text-lg font-bold text-white">{testimonial.name}</h5>
-              <p class="text-base text-pink-300">{testimonial.role}</p>
-            </div>
-          </div>
-        </Card>
-      {/each}
-    </div>
-  </div>
-</section>
 
 <!-- CTA Section -->
 <section class="py-16 bg-pink-50">
@@ -233,25 +145,4 @@
   </div>
 </section>
 
-<script context="module">
-  const testimonials = [
-    {
-      avatar: "https://source.unsplash.com/random/100x100/?woman",
-      text: "The Fridge has completely changed how I manage my kitchen. I've reduced my food waste by 70% and saved hundreds on groceries!",
-      name: "Sarah Johnson",
-      role: "Working Parent"
-    },
-    {
-      avatar: "https://source.unsplash.com/random/100x100/?man",
-      text: "As a chef, I love how The Fridge helps me experiment with ingredients I already have. The recipe suggestions are genuinely creative!",
-      name: "Michael Chen",
-      role: "Home Chef"
-    },
-    {
-      avatar: "https://source.unsplash.com/random/100x100/?person",
-      text: "I used to throw out so much food. Now with The Fridge's expiration notifications, I'm actually using everything I buy!",
-      name: "Jamie Taylor",
-      role: "Student"
-    }
-  ];
-</script>
+
