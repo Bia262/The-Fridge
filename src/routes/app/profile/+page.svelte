@@ -28,7 +28,7 @@
 
       <!-- Stats -->
       <div class="grid grid-cols-3 gap-4 mb-8">
-        <div class="bg-white border-2 border-pink-100 p-4 rounded-xl text-center hover:border-pink-200 transition-all duration-200">
+        <div class="bg-white border-2 border-white-100 p-4 rounded-xl text-center hover:border-light pink-200 transition-all duration-200">
           <div class="text-2xl font-bold text-gray-800">{recipesUploadedCount}</div>
           <div class="text-sm text-pink-400"> <Button href="/app/recipes" size="xl" class="bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700">
             Recipes
@@ -36,7 +36,7 @@
           </Button></div>
         </div>
       
-        <div class="bg-white border-2 border-pink-100 p-4 rounded-xl text-center hover:border-pink-200 transition-all duration-200">
+        <div class="bg-white border-2 border-white-100 p-4 rounded-xl text-center hover:border-light pink-200 transition-all duration-200">
           <div class="text-2xl font-bold text-gray-800">{itemsInFridgeCount}</div>
           <div class="text-sm text-pink-400"> <Button href="/app" size="xl" class="bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700">
             Items
