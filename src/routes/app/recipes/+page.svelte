@@ -1,4 +1,5 @@
 <script lang="ts">
+  
   type Recipe = {
     id: string;
     name: string;
@@ -20,8 +21,7 @@
   let selectedRecipe: Recipe | null = null;
   let showRecipeModal = false;
 
-  // Example recipes data
-  let recipes: Recipe[] = [
+  export let recipes: Recipe[] = [
     {
       id: '1',
       name: 'Spaghetti Carbonara',
