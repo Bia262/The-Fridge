@@ -182,6 +182,42 @@
 			</button>
 		</div>
 
+		let showRemoveModal = false;
+    		let removeItemName = "";
+    		let removeItemQuantity = 1;
+
+    		function deleteItem(itemName: string) {
+        	removeItemName = itemName;
+        	removeItemQuantity = 1;
+        	showRemoveModal = true;
+    	}
+
+    		function confirmRemoveItem() 	{
+        	const item = itemList.find(i => i.name == removeItemName);
+        	if (item) {
+            	if (removeItemQuantity >= item.quantity) {
+                itemList = itemList.filter(i => i.name !== removeItemName);
+            	} else {
+                item.quantity -= removeItemQuantity;
+                itemList = [...itemList];
+            	}
+        	}
+       	 	showRemoveModal = false;
+    	}
+	{#if showRemoveModal}
+                <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div class="bg-white rounded-lg p-6 w-80">
+                        <h3 class="text-lg font-semibold mb-4">Remove Item</h3>
+                        <p class="mb-4">How many <strong>{removeItemName}</strong> would you like to remove?</p>
+                        <input type="number" min="1" max={itemList.find(i => i.name === removeItemName)?.quantity ?? 1} bind:value={removeItemQuantity} class="w-full mb-4 px-3 py-2 border border-gray-300 rounded" />
+                        <div class="flex justify-end space-x-4">
+                            <button class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400" on:click={closeRemoveModal}>Cancel</button>
+                            <button class="px-4 py-2 bg-pink-400 text-white rounded hover:bg-pink-500" on:click={confirmRemoveItem} disabled={removeItemQuantity < 1}>Remove</button>
+                        </div>
+                    </div>
+                </div>
+            {/if}
+		
 		<!-- Right Column - Recipes -->
 		<div class="bg-white rounded-2xl shadow-xl p-8 border-2 border-pink-100">
 			<h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-2">
