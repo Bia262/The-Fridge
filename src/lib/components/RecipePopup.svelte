@@ -1,114 +1,148 @@
 <script lang="ts">
-  import { Button, Modal, Carousel } from 'flowbite-svelte';
+// Props
+  export let show = false;
+  export let recipe: {
+    id: string;
+    name: string;
+    description: string;
+    instructions: string;
+    ingredients: string[];
+    servings: number;
+    prepTime: number;
+    cookTime: number;
+    images: string[];
+    createdBy: string;
+  };
 
-<!-- Recipe Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {#each filteredRecipes as recipe}
-        <div 
-          on:click={() => openRecipeModal(recipe)}
-          class="bg-white rounded-2xl shadow-xl border-2 border-pink-100 overflow-hidden hover:border-pink-200 transition-all duration-200 cursor-pointer"
-        >
-          {#if recipe.images && recipe.images[0]}
-            <img src={recipe.images[0]} alt={recipe.name} class="w-full h-48 object-cover" />
-          {:else}
-            <div class="h-48 bg-gradient-to-r from-pink-100 to-pink-200 flex items-center justify-center">
-              <span class="text-pink-400">No image available</span>
-            </div>
-          {/if}
-          <div class="p-6">
-            <h3 class="font-bold text-gray-800 mb-2">{recipe.name}</h3>
-            <p class="text-sm text-pink-400 mb-3">{recipe.description}</p>
-            <div class="flex justify-between items-center">
-              <div class="flex space-x-2">
-                <span class="text-xs bg-pink-100 text-pink-600 px-3 py-1 rounded-full font-medium capitalize">{recipe.difficulty}</span>
-                <span class="text-xs bg-purple-100 text-purple-600 px-3 py-1 rounded-full font-medium">{recipe.prepTime + recipe.cookTime} min</span>
-              </div>
-            </div>
-          </div>
+  // Prepare images for carousel
+  $: carouselImages = recipe.images.map(url => ({
+    src: url,
+    alt: recipe.name
+  }));
+
+  function formatTime(minutes: number) {
+    if (!minutes) return 'N/A';
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return hours > 0 ? `${hours}h ${mins > 0 ? mins + 'm' : ''}` : `${mins}m`;
+  }
+
+  function parseInstructions(instructions: string) {
+    if (!instructions) return [];
+    let steps = instructions.split(/\n+/);
+    if (steps.length === 1) {
+      steps = instructions.split(/\d+\.\s+/);
+      if (steps[0].trim() === '') steps.shift();
+    }
+    return steps.filter(step => step.trim() !== '');
+  }
+
+  $: instructionSteps = parseInstructions(recipe.instructions);
+
+  function handleClose() {
+    show = false;
+  }
+</script>
+
+<Modal bind:open={show} size="xl" autoclose class="w-full">
+  <div class="p-0 rounded-lg overflow-hidden bg-yellow-50/20">
+    <!-- Carousel or Header -->
+    {#if recipe.images?.length}
+      <div class="h-64 mb-4">
+        <Carousel
+          images={carouselImages}
+          loop={true}
+          duration={3000}
+          class="h-full rounded-t-lg"
+        />
+      </div>
+    {:else}
+      <div class="bg-gradient-to-r from-pink-400 to-yellow-300 h-48 rounded-t-lg flex items-end p-6">
+        <h1 class="text-3xl font-bold text-white">{recipe.name}</h1>
+      </div>
+    {/if}
+
+    <!-- Content -->
+    <div class="p-6 bg-white rounded-b-lg">
+      {#if recipe.images?.length}
+        <h1 class="text-2xl font-bold text-yellow-800 mb-4">{recipe.name}</h1>
+      {/if}
+
+      {#if recipe.description}
+        <p class="text-gray-700 mb-6 bg-yellow-100/50 p-4 rounded-lg border border-yellow-200">{recipe.description}</p>
+      {/if}
+
+      <!-- Time + Servings Info -->
+      <div class="flex gap-8 mb-6 justify-center text-center border-y border-yellow-200 py-4 bg-yellow-100/30 rounded-lg">
+        <div class="flex flex-col items-center">
+          <span class="text-sm text-yellow-600 font-medium">Prep Time</span>
+          <span class="font-medium text-yellow-800">{formatTime(recipe.prepTime)}</span>
         </div>
-      {/each}
-    </div>
-  </div>
-</div>
-
-<!-- Recipe Details Modal -->
-{#if showRecipeModal && selectedRecipe}
-  <div 
-    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" 
-    on:click|self={closeRecipeModal}
-  >
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
-      <!-- Header -->
-      <div class="p-6 border-b border-gray-200 sticky top-0 bg-white z-10">
-        <div class="flex justify-between items-center">
-          <h2 class="text-2xl font-bold text-gray-800">{selectedRecipe.name}</h2>
-          <button on:click={closeRecipeModal} class="text-gray-500 hover:text-gray-700">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-          </button>
+        <div class="flex flex-col items-center">
+          <span class="text-sm text-yellow-600 font-medium">Cook Time</span>
+          <span class="font-medium text-yellow-800">{formatTime(recipe.cookTime)}</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-sm text-yellow-600 font-medium">Total Time</span>
+          <span class="font-medium text-yellow-800">{formatTime(recipe.prepTime + recipe.cookTime)}</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-sm text-yellow-600 font-medium">Servings</span>
+          <span class="font-medium text-yellow-800">{recipe.servings}</span>
         </div>
       </div>
 
-      <!-- Content -->
-      <div class="p-6 space-y-6">
-        <!-- Image -->
-        {#if selectedRecipe.images && selectedRecipe.images[0]}
-          <img src={selectedRecipe.images[0]} alt={selectedRecipe.name} class="w-full h-64 object-cover rounded-lg" />
-        {:else}
-          <div class="h-64 bg-gradient-to-r from-pink-100 to-pink-200 rounded-lg flex items-center justify-center">
-            <span class="text-pink-400">No image available</span>
-          </div>
-        {/if}
-
-        <!-- Description -->
-        <p class="text-gray-700">{selectedRecipe.description}</p>
-
-        <!-- Stats -->
-        <div class="grid grid-cols-3 gap-4 text-center">
-          <div class="bg-pink-50 rounded-lg p-3">
-            <p class="text-sm text-pink-500">Prep Time</p>
-            <p class="font-bold">{selectedRecipe.prepTime} min</p>
-          </div>
-          <div class="bg-pink-50 rounded-lg p-3">
-            <p class="text-sm text-pink-500">Cook Time</p>
-            <p class="font-bold">{selectedRecipe.cookTime} min</p>
-          </div>
-          <div class="bg-pink-50 rounded-lg p-3">
-            <p class="text-sm text-pink-500">Servings</p>
-            <p class="font-bold">{selectedRecipe.servings}</p>
-          </div>
-        </div>
-
-        <!-- Ingredients -->
-        <div>
-          <h3 class="text-xl font-bold text-gray-800 mb-3">Ingredients</h3>
-          <ul class="space-y-2">
-            {#if selectedRecipe.ingredients}
-              {#each selectedRecipe.ingredients as ingredient}
-                <li class="flex items-start">
-                  <span class="inline-block w-2 h-2 mt-2 mr-2 bg-pink-400 rounded-full"></span>
-                  <span class="text-gray-700">{ingredient.quantity} {ingredient.name}</span>
-                </li>
-              {/each}
-            {:else}
-              <li class="text-gray-500">No ingredients listed</li>
-            {/if}
+      <!-- Ingredients Section -->
+      {#if recipe.ingredients && recipe.ingredients.length > 0}
+        <div class="mb-6">
+          <h2 class="text-xl font-bold text-pink-700 mb-3 flex items-center">
+            <span class="bg-yellow-200 text-yellow-700 p-1 rounded-full mr-2">🧂</span> Ingredients
+          </h2>
+          <ul class="space-y-2 list-disc list-inside text-pink-900 bg-pink-50/50 p-4 rounded-lg border border-pink-200">
+            {#each recipe.ingredients as item}
+              <li>{item}</li>
+            {/each}
           </ul>
         </div>
+      {/if}
 
-        <!-- Instructions -->
-        <div>
-          <h3 class="text-xl font-bold text-gray-800 mb-3">Instructions</h3>
-          {#if selectedRecipe.instructions}
-            <div class="prose max-w-none text-gray-700 whitespace-pre-line">
-              {selectedRecipe.instructions}
-            </div>
-          {:else}
-            <p class="text-gray-500">No instructions provided</p>
-          {/if}
+      <!-- Instructions -->
+      {#if instructionSteps.length > 0}
+        <div class="mb-6">
+          <h2 class="text-xl font-bold text-pink-700 mb-3 flex items-center">
+            <span class="bg-yellow-200 text-yellow-700 p-1 rounded-full mr-2">🍳</span> Instructions
+          </h2>
+          <ol class="space-y-3">
+            {#each instructionSteps as step, i}
+              <li class="bg-yellow-50 p-4 rounded-lg border-2 border-yellow-200 hover:border-yellow-300 transition-all duration-200 shadow-sm">
+                <div class="flex items-start gap-3">
+                  <div class="bg-gradient-to-r from-pink-400 to-yellow-300 text-white rounded-full w-7 h-7 flex items-center justify-center flex-shrink-0 mt-0.5 shadow-md">
+                    {i + 1}
+                  </div>
+                  <p class="text-yellow-900">{step}</p>
+                </div>
+              </li>
+            {/each}
+          </ol>
         </div>
+      {/if}
+
+      <!-- Action Buttons -->
+      <div class="flex justify-between mt-8">
+        <Button
+          color="light"
+          class="border-2 border-yellow-300 text-yellow-700 hover:bg-yellow-100 font-medium"
+        >
+          💾 Save Recipe
+        </Button>
+
+        <Button
+          class="bg-gradient-to-r from-yellow-400 to-pink-500 hover:from-yellow-500 hover:to-pink-600 shadow-md"
+          on:click={handleClose}
+        >
+          Close
+        </Button>
       </div>
     </div>
   </div>
-{/if}
+</Modal>
