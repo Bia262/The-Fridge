@@ -260,15 +260,21 @@
 <!-- Recipe Details Modal -->
 {#if showRecipeModal && selectedRecipe}
   <div 
-    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" 
+    class="fixed inset-0 backdrop-blur-md bg-black/30 flex items-center justify-center z-50 p-4" 
     on:click|self={closeRecipeModal}
   >
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto border-2 border-pink-100">
       <!-- Header -->
-      <div class="p-6 border-b border-gray-200 sticky top-0 bg-white z-10">
+      <div class="p-6 border-b border-pink-100 sticky top-0 bg-white z-10 rounded-t-2xl">
         <div class="flex justify-between items-center">
-          <h2 class="text-2xl font-bold text-gray-800">{selectedRecipe.name}</h2>
-          <button on:click={closeRecipeModal} class="text-gray-500 hover:text-gray-700">
+          <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+            {selectedRecipe.name}
+            <span class="text-pink-400">🍳</span>
+          </h2>
+          <button 
+            on:click={closeRecipeModal} 
+            class="text-gray-400 hover:text-pink-500 transition-colors p-2 rounded-full hover:bg-pink-50"
+          >
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
@@ -277,61 +283,88 @@
       </div>
 
       <!-- Content -->
-      <div class="p-6 space-y-6">
+      <div class="p-8 space-y-8">
         <!-- Image -->
-        {#if selectedRecipe.images && selectedRecipe.images[0]}
-          <img src={selectedRecipe.images[0]} alt={selectedRecipe.name} class="w-full h-64 object-cover rounded-lg" />
-        {:else}
-          <div class="h-64 bg-gradient-to-r from-pink-100 to-pink-200 rounded-lg flex items-center justify-center">
-            <span class="text-pink-400">No image available</span>
-          </div>
-        {/if}
+        <div class="rounded-2xl overflow-hidden border-2 border-pink-100">
+          {#if selectedRecipe.images && selectedRecipe.images[0]}
+            <img src={selectedRecipe.images[0]} alt={selectedRecipe.name} class="w-full h-72 object-cover" />
+          {:else}
+            <div class="h-72 bg-gradient-to-r from-pink-100 to-pink-200 flex items-center justify-center">
+              <span class="text-pink-400 text-lg">No image available</span>
+            </div>
+          {/if}
+        </div>
 
         <!-- Description -->
-        <p class="text-gray-700">{selectedRecipe.description}</p>
+        <div class="bg-pink-50 rounded-2xl p-6 border-2 border-pink-100">
+          <p class="text-gray-700 text-lg leading-relaxed">{selectedRecipe.description}</p>
+        </div>
 
         <!-- Stats -->
-        <div class="grid grid-cols-3 gap-4 text-center">
-          <div class="bg-pink-50 rounded-lg p-3">
-            <p class="text-sm text-pink-500">Prep Time</p>
-            <p class="font-bold">{selectedRecipe.prepTime} min</p>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="bg-white rounded-2xl p-6 border-2 border-pink-100 text-center hover:shadow-md transition-shadow">
+            <div class="text-pink-400 text-2xl mb-2">⏱️</div>
+            <p class="text-sm text-pink-500 font-medium">Prep Time</p>
+            <p class="font-bold text-gray-800 text-xl">{selectedRecipe.prepTime} min</p>
           </div>
-          <div class="bg-pink-50 rounded-lg p-3">
-            <p class="text-sm text-pink-500">Cook Time</p>
-            <p class="font-bold">{selectedRecipe.cookTime} min</p>
+          <div class="bg-white rounded-2xl p-6 border-2 border-pink-100 text-center hover:shadow-md transition-shadow">
+            <div class="text-pink-400 text-2xl mb-2">🔥</div>
+            <p class="text-sm text-pink-500 font-medium">Cook Time</p>
+            <p class="font-bold text-gray-800 text-xl">{selectedRecipe.cookTime} min</p>
           </div>
-          <div class="bg-pink-50 rounded-lg p-3">
-            <p class="text-sm text-pink-500">Servings</p>
-            <p class="font-bold">{selectedRecipe.servings}</p>
+          <div class="bg-white rounded-2xl p-6 border-2 border-pink-100 text-center hover:shadow-md transition-shadow">
+            <div class="text-pink-400 text-2xl mb-2">👥</div>
+            <p class="text-sm text-pink-500 font-medium">Servings</p>
+            <p class="font-bold text-gray-800 text-xl">{selectedRecipe.servings}</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border-2 border-pink-100 text-center hover:shadow-md transition-shadow">
+            <div class="text-pink-400 text-2xl mb-2">📊</div>
+            <p class="text-sm text-pink-500 font-medium">Difficulty</p>
+            <p class="font-bold text-gray-800 text-xl capitalize">{selectedRecipe.difficulty}</p>
           </div>
         </div>
 
         <!-- Ingredients -->
-        <div>
-          <h3 class="text-xl font-bold text-gray-800 mb-3">Ingredients</h3>
-          <ul class="space-y-2">
+        <div class="bg-white rounded-2xl p-8 border-2 border-pink-100">
+          <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+            <span>Ingredients</span>
+            <span class="text-pink-400">🛒</span>
+          </h3>
+          <div class="space-y-3">
             {#if selectedRecipe.ingredients}
               {#each selectedRecipe.ingredients as ingredient}
-                <li class="flex items-start">
-                  <span class="inline-block w-2 h-2 mt-2 mr-2 bg-pink-400 rounded-full"></span>
-                  <span class="text-gray-700">{ingredient.quantity} {ingredient.name}</span>
-                </li>
+                <div class="flex items-center p-3 bg-pink-50 rounded-xl border border-pink-100">
+                  <div class="w-3 h-3 bg-pink-400 rounded-full mr-4"></div>
+                  <span class="text-gray-700 font-medium">{ingredient.quantity}</span>
+                  <span class="text-gray-600 ml-2">{ingredient.name}</span>
+                </div>
               {/each}
             {:else}
-              <li class="text-gray-500">No ingredients listed</li>
+              <div class="text-center py-8 text-gray-500">
+                <span class="text-4xl mb-2 block">📝</span>
+                <p>No ingredients listed</p>
+              </div>
             {/if}
-          </ul>
+          </div>
         </div>
 
         <!-- Instructions -->
-        <div>
-          <h3 class="text-xl font-bold text-gray-800 mb-3">Instructions</h3>
+        <div class="bg-white rounded-2xl p-8 border-2 border-pink-100">
+          <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+            <span>Instructions</span>
+            <span class="text-pink-400">👨‍🍳</span>
+          </h3>
           {#if selectedRecipe.instructions}
-            <div class="prose max-w-none text-gray-700 whitespace-pre-line">
-              {selectedRecipe.instructions}
+            <div class="bg-pink-50 rounded-xl p-6 border border-pink-100">
+              <div class="text-gray-700 whitespace-pre-line leading-relaxed">
+                {selectedRecipe.instructions}
+              </div>
             </div>
           {:else}
-            <p class="text-gray-500">No instructions provided</p>
+            <div class="text-center py-8 text-gray-500">
+              <span class="text-4xl mb-2 block">📋</span>
+              <p>No instructions provided</p>
+            </div>
           {/if}
         </div>
       </div>
@@ -341,14 +374,17 @@
 
 <!-- Create Recipe Modal -->
 {#if showCreateModal}
-  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
-      <div class="p-6 border-b border-gray-200">
+  <div class="fixed inset-0 backdrop-blur-md bg-black/30 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto border-2 border-pink-100">
+      <div class="p-6 border-b border-pink-100 sticky top-0 bg-white z-10 rounded-t-2xl">
         <div class="flex justify-between items-center">
-          <h2 class="text-2xl font-bold text-gray-800">Create New Recipe</h2>
+          <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+            Create New Recipe
+            <span class="text-pink-400">✨</span>
+          </h2>
           <button 
             on:click={closeCreateModal}
-            class="text-gray-500 hover:text-gray-700"
+            class="text-gray-400 hover:text-pink-500 transition-colors p-2 rounded-full hover:bg-pink-50"
           >
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -357,100 +393,118 @@
         </div>
       </div>
       
-      <div class="p-6">
-        <form class="space-y-6">
-          <!-- Basic Info -->
-          <div class="space-y-4">
-            <div>
-              <label for="recipe-name" class="block text-sm font-medium text-gray-700 mb-1">Recipe Name</label>
-              <input 
-                type="text" 
-                id="recipe-name" 
-                placeholder="Enter recipe name" 
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
-              >
-            </div>
-            
-            <div>
-              <label for="recipe-description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-              <textarea 
-                id="recipe-description" 
-                placeholder="Brief description of your recipe" 
-                rows="2"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
-              ></textarea>
-            </div>
-          </div>
-          
-          <!-- Recipe Details -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <label for="recipe-servings" class="block text-sm font-medium text-gray-700 mb-1">Servings</label>
-              <input 
-                type="number" 
-                id="recipe-servings" 
-                min="1"
-                placeholder="4" 
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
-              >
-            </div>
-            
-            <div>
-              <label for="recipe-prep-time" class="block text-sm font-medium text-gray-700 mb-1">Prep Time (min)</label>
-              <input 
-                type="number" 
-                id="recipe-prep-time" 
-                min="0"
-                placeholder="15" 
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
-              >
-            </div>
-            
-            <div>
-              <label for="recipe-cook-time" class="block text-sm font-medium text-gray-700 mb-1">Cook Time (min)</label>
-              <input 
-                type="number" 
-                id="recipe-cook-time" 
-                min="0"
-                placeholder="30" 
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
-              >
+      <div class="p-8">
+        <form class="space-y-8">
+          <!-- Basic Info Section -->
+          <div class="bg-pink-50 rounded-2xl p-6 border-2 border-pink-100">
+            <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <span>Basic Information</span>
+              <span class="text-pink-400">📝</span>
+            </h3>
+            <div class="space-y-4">
+              <div>
+                <label for="recipe-name" class="block text-sm font-medium text-gray-700 mb-2">Recipe Name</label>
+                <input 
+                  type="text" 
+                  id="recipe-name" 
+                  placeholder="Enter recipe name" 
+                  class="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300 transition-colors"
+                >
+              </div>
+              
+              <div>
+                <label for="recipe-description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                <textarea 
+                  id="recipe-description" 
+                  placeholder="Brief description of your recipe" 
+                  rows="3"
+                  class="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300 transition-colors resize-none"
+                ></textarea>
+              </div>
             </div>
           </div>
           
-          <div>
-            <label for="recipe-difficulty" class="block text-sm font-medium text-gray-700 mb-1">Difficulty</label>
-            <select 
-              id="recipe-difficulty" 
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
-            >
-              <option value="easy">Easy</option>
-              <option value="medium">Medium</option>
-              <option value="hard">Hard</option>
-            </select>
+          <!-- Recipe Details Section -->
+          <div class="bg-pink-50 rounded-2xl p-6 border-2 border-pink-100">
+            <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <span>Recipe Details</span>
+              <span class="text-pink-400">📊</span>
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div>
+                <label for="recipe-servings" class="block text-sm font-medium text-gray-700 mb-2">Servings</label>
+                <input 
+                  type="number" 
+                  id="recipe-servings" 
+                  min="1"
+                  placeholder="4" 
+                  class="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300 transition-colors"
+                >
+              </div>
+              
+              <div>
+                <label for="recipe-prep-time" class="block text-sm font-medium text-gray-700 mb-2">Prep Time (min)</label>
+                <input 
+                  type="number" 
+                  id="recipe-prep-time" 
+                  min="0"
+                  placeholder="15" 
+                  class="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300 transition-colors"
+                >
+              </div>
+              
+              <div>
+                <label for="recipe-cook-time" class="block text-sm font-medium text-gray-700 mb-2">Cook Time (min)</label>
+                <input 
+                  type="number" 
+                  id="recipe-cook-time" 
+                  min="0"
+                  placeholder="30" 
+                  class="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300 transition-colors"
+                >
+              </div>
+              
+              <div>
+                <label for="recipe-difficulty" class="block text-sm font-medium text-gray-700 mb-2">Difficulty</label>
+                <select 
+                  id="recipe-difficulty" 
+                  class="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300 transition-colors"
+                >
+                  <option value="easy">Easy</option>
+                  <option value="medium">Medium</option>
+                  <option value="hard">Hard</option>
+                </select>
+              </div>
+            </div>
           </div>
           
-          <!-- Instructions -->
-          <div>
-            <label for="recipe-instructions" class="block text-sm font-medium text-gray-700 mb-1">Instructions</label>
+          <!-- Instructions Section -->
+          <div class="bg-pink-50 rounded-2xl p-6 border-2 border-pink-100">
+            <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <span>Instructions</span>
+              <span class="text-pink-400">👨‍🍳</span>
+            </h3>
             <textarea 
               id="recipe-instructions" 
               placeholder="Step-by-step instructions for your recipe" 
               rows="6"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
+              class="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300 transition-colors resize-none"
             ></textarea>
           </div>
           
-          <!-- Image Upload -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Recipe Image</label>
-            <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-              <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <!-- Image Upload Section -->
+          <div class="bg-pink-50 rounded-2xl p-6 border-2 border-pink-100">
+            <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <span>Recipe Image</span>
+              <span class="text-pink-400">📸</span>
+            </h3>
+            <div class="border-2 border-dashed border-pink-300 rounded-xl p-8 text-center bg-white hover:bg-pink-50 transition-colors">
+              <svg class="mx-auto h-16 w-16 text-pink-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
               </svg>
-              <p class="mt-1 text-sm text-gray-500">Drag and drop an image, or click to select</p>
+              <p class="text-gray-600 mb-4">Drag and drop an image, or click to select</p>
               <input type="file" class="hidden">
-              <button class="mt-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
+              <button class="px-6 py-3 bg-gradient-to-r from-pink-400 to-pink-500 text-white rounded-xl hover:from-pink-500 hover:to-pink-600 transition-all shadow-lg font-medium">
                 Upload Image
               </button>
             </div>
@@ -458,15 +512,15 @@
         </form>
       </div>
       
-      <div class="p-6 border-t border-gray-200 flex justify-end space-x-3">
+      <div class="p-6 border-t border-pink-100 flex justify-end space-x-4 bg-pink-50 rounded-b-2xl">
         <button 
           on:click={closeCreateModal}
-          class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+          class="px-6 py-3 border-2 border-pink-200 rounded-xl text-gray-700 hover:bg-pink-100 transition-colors font-medium"
         >
           Cancel
         </button>
         <button 
-          class="px-6 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors"
+          class="px-6 py-3 bg-gradient-to-r from-pink-400 to-pink-500 text-white rounded-xl hover:from-pink-500 hover:to-pink-600 transition-all shadow-lg font-medium"
         >
           Create Recipe
         </button>
